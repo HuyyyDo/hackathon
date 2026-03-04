@@ -1,0 +1,2 @@
+{"timestamp": "2026-03-03T11:15:57", "session_id": "shift_demo", "role": "user", "content": "what is my shift today"}
+{"timestamp": "2026-03-03T11:15:57", "session_id": "shift_demo", "role": "assistant", "content": "You are scheduled on 2026-03-03 from 09:00 to 17:00 at WIMTACH Unit 4012 with Medic 10309. Break window is 13:00-13:30."}

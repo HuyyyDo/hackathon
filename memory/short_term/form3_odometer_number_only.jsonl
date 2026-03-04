@@ -1,0 +1,6 @@
+{"timestamp": "2026-03-03T15:05:41", "session_id": "form3_odometer_number_only", "role": "user", "content": "start form 3 shift report"}
+{"timestamp": "2026-03-03T15:05:41", "session_id": "form3_odometer_number_only", "role": "assistant", "content": "What is the vehicle or rig identifier?"}
+{"timestamp": "2026-03-03T15:05:41", "session_id": "form3_odometer_number_only", "role": "user", "content": "vehicle: Unit 4012, fuel level: full, equipment and narcotics check status: all good, notes: PPE stocked"}
+{"timestamp": "2026-03-03T15:05:41", "session_id": "form3_odometer_number_only", "role": "assistant", "content": "What is the odometer start reading?"}
+{"timestamp": "2026-03-03T15:05:41", "session_id": "form3_odometer_number_only", "role": "user", "content": "36000"}
+{"timestamp": "2026-03-03T15:05:41", "session_id": "form3_odometer_number_only", "role": "assistant", "content": "I hit a temporary backend issue. Please try again. If this keeps happening, say reset task and retry your request. [error: name 'index' is not defined]"}

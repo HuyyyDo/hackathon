@@ -1,0 +1,6 @@
+{"timestamp": "2026-03-03T12:25:20", "session_id": "occ_demo", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-03T12:25:21", "session_id": "occ_demo", "role": "assistant", "content": "Please provide the occurrence date (YYYY-MM-DD or MM/DD/YYYY format)."}
+{"timestamp": "2026-03-03T12:25:21", "session_id": "occ_demo", "role": "user", "content": "2026-03-03 14:20 vehicle collision short description: backed into station door requested by Paul report creator Paul"}
+{"timestamp": "2026-03-03T12:25:22", "session_id": "occ_demo", "role": "assistant", "content": "It looks like you're missing a few required fields. Please provide the following:\n\n1. Classification\n2. Occurrence Type\n\nOnce I have that information, I'll be able to submit the form!"}
+{"timestamp": "2026-03-03T12:25:22", "session_id": "occ_demo", "role": "user", "content": "confirm"}
+{"timestamp": "2026-03-03T12:25:25", "session_id": "occ_demo", "role": "assistant", "content": "I have the following information for the Form 1 Occurrence Report:\n\n- **Date**: 2026-03-03\n- **Time**: 14:20\n- **Brief Description**: backed into station door\n- **Requested By**: Paul\n- **Report Creator**: Paul\n\nPlease provide the following missing information:\n\n1. **Classification**\n2. **Occurrence Type**"}

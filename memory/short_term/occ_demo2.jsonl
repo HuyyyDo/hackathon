@@ -1,0 +1,18 @@
+{"timestamp": "2026-03-03T12:25:57", "session_id": "occ_demo2", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-03T12:25:59", "session_id": "occ_demo2", "role": "assistant", "content": "Please provide the date of the occurrence in YYYY-MM-DD or MM/DD/YYYY format."}
+{"timestamp": "2026-03-03T12:25:59", "session_id": "occ_demo2", "role": "user", "content": "date is 2026-03-03"}
+{"timestamp": "2026-03-03T12:25:59", "session_id": "occ_demo2", "role": "assistant", "content": "What time did the occurrence take place? Please provide it in HH:MM 24-hour format."}
+{"timestamp": "2026-03-03T12:25:59", "session_id": "occ_demo2", "role": "user", "content": "time is 14:20"}
+{"timestamp": "2026-03-03T12:26:00", "session_id": "occ_demo2", "role": "assistant", "content": "What is the classification of the occurrence?"}
+{"timestamp": "2026-03-03T12:26:00", "session_id": "occ_demo2", "role": "user", "content": "classification vehicle"}
+{"timestamp": "2026-03-03T12:26:00", "session_id": "occ_demo2", "role": "assistant", "content": "What is the occurrence type?"}
+{"timestamp": "2026-03-03T12:26:00", "session_id": "occ_demo2", "role": "user", "content": "occurrence type collision"}
+{"timestamp": "2026-03-03T12:26:01", "session_id": "occ_demo2", "role": "assistant", "content": "Please provide a brief description of the occurrence."}
+{"timestamp": "2026-03-03T12:26:01", "session_id": "occ_demo2", "role": "user", "content": "brief description ambulance backed into station door"}
+{"timestamp": "2026-03-03T12:26:02", "session_id": "occ_demo2", "role": "assistant", "content": "Who is the requested by (name of the requester)?"}
+{"timestamp": "2026-03-03T12:26:02", "session_id": "occ_demo2", "role": "user", "content": "requested by Paul"}
+{"timestamp": "2026-03-03T12:26:02", "session_id": "occ_demo2", "role": "assistant", "content": "Please provide the name of the person completing the form (report creator)."}
+{"timestamp": "2026-03-03T12:26:02", "session_id": "occ_demo2", "role": "user", "content": "report creator Paul"}
+{"timestamp": "2026-03-03T12:26:04", "session_id": "occ_demo2", "role": "assistant", "content": "I captured Form 1: date 2026-03-03, time 14:20, classification vehicle, type collision, requested by Paul, creator Paul. Say confirm to submit or cancel to edit."}
+{"timestamp": "2026-03-03T12:26:04", "session_id": "occ_demo2", "role": "user", "content": "confirm"}
+{"timestamp": "2026-03-03T12:26:04", "session_id": "occ_demo2", "role": "assistant", "content": "Occurrence report submitted. SMTP credentials not configured; artifacts generated locally."}

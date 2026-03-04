@@ -1,0 +1,2 @@
+{"timestamp": "2026-03-03T13:32:41", "session_id": "route_fix2", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-03T13:32:53", "session_id": "route_fix2", "role": "assistant", "content": "Great—let’s begin your Form 1 Occurrence Report. Please provide:\n\n- Date (YYYY-MM-DD or MM/DD/YYYY):\n- Time (HH:MM 24-hour):\n- Classification:\n- Occurrence type:\n- Brief description:\n- Requested by (name):\n- Report creator (name):"}

@@ -1,0 +1,6 @@
+{"timestamp": "2026-03-03T12:16:38", "session_id": "name_in_form", "role": "user", "content": "my name is Paul"}
+{"timestamp": "2026-03-03T12:16:38", "session_id": "name_in_form", "role": "assistant", "content": "Got it. I will call you Paul."}
+{"timestamp": "2026-03-03T12:16:38", "session_id": "name_in_form", "role": "user", "content": "fill out the form for me"}
+{"timestamp": "2026-03-03T12:16:41", "session_id": "name_in_form", "role": "assistant", "content": "I can help with that! I just need a bit more information:\n\n1. How old are you?\n2. What is your gender? (Male, Female, Other, or Prefer not to say)\n3. What is the recipient type? (Patient, Family, Bystander, or Other)\n\nOnce I have those details, I'll be able to fill out the form for you."}
+{"timestamp": "2026-03-03T12:16:41", "session_id": "name_in_form", "role": "user", "content": "16 female patient"}
+{"timestamp": "2026-03-03T12:16:42", "session_id": "name_in_form", "role": "assistant", "content": "I captured: name Paul, age 16, gender Female, recipient type Patient. Say confirm to submit or cancel to edit."}

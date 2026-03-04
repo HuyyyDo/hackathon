@@ -1,0 +1,16 @@
+{"timestamp": "2026-03-03T11:45:49", "session_id": "name_demo", "form_type": "profile", "summary": {"name": "Alex"}}
+{"timestamp": "2026-03-03T11:49:28", "session_id": "demo_tablet_1", "form_type": "profile", "summary": {"name": "Paul"}}
+{"timestamp": "2026-03-03T11:52:22", "session_id": "mem_ui_test", "form_type": "profile", "summary": {"name": "Paul"}}
+{"timestamp": "2026-03-03T11:52:27", "session_id": "mem_ui_live", "form_type": "profile", "summary": {"name": "Paul"}}
+{"timestamp": "2026-03-03T11:58:51", "session_id": "session_1772556684303", "form_type": "profile", "summary": {"name": "Paul"}}
+{"timestamp": "2026-03-03T11:59:42", "session_id": "session_1772556684303", "form_type": "profile", "summary": {"name": "Cliff"}}
+{"timestamp": "2026-03-03T12:04:40", "session_id": "session_1772556684303", "form_type": "profile", "summary": {"name": "Paul And I'M Female"}}
+{"timestamp": "2026-03-03T12:16:38", "session_id": "name_in_form", "form_type": "profile", "summary": {"name": "Paul"}}
+{"timestamp": "2026-03-03T12:17:58", "session_id": "session_1772556684303", "form_type": "profile", "summary": {"name": "Cliff"}}
+{"timestamp": "2026-03-03T12:36:59", "session_id": "session_1772556684303", "form_type": "profile", "summary": {"name": "Jake"}}
+{"timestamp": "2026-03-03T12:44:20", "session_id": "session_1772556684303", "form_type": "profile", "summary": {"name": "Jake"}}
+{"timestamp": "2026-03-03T12:56:39", "session_id": "session_1772556684303", "form_type": "profile", "summary": {"name": "Paul"}}
+{"timestamp": "2026-03-03T13:54:14", "session_id": "f2_name_profiled", "form_type": "profile", "summary": {"name": "Paul"}}
+{"timestamp": "2026-03-03T14:35:23", "session_id": "all_forms_collect", "form_type": "profile", "summary": {"name": "Alex"}}
+{"timestamp": "2026-03-03T14:35:34", "session_id": "all_forms_collect2", "form_type": "profile", "summary": {"name": "Alex"}}
+{"timestamp": "2026-03-03T16:09:23", "session_id": "session_1772556684303", "form_type": "profile", "summary": {"name": "Paul"}}

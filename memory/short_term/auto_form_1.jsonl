@@ -1,0 +1,2 @@
+{"timestamp": "2026-03-03T12:03:25", "session_id": "auto_form_1", "role": "user", "content": "fill out the form for me"}
+{"timestamp": "2026-03-03T12:03:27", "session_id": "auto_form_1", "role": "assistant", "content": "I'll need a bit more information to complete the form. Could you please provide:\n\n1. The age of the recipient?\n2. The gender of the recipient? (Male, Female, Other, or Prefer not to say)\n3. The recipient type? (Patient, Family, Bystander, or Other) \n\nThank you!"}

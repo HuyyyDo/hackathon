@@ -1,0 +1,4 @@
+{"timestamp": "2026-03-03T15:02:55", "session_id": "form3_station_fix", "role": "user", "content": "start form 3 shift report"}
+{"timestamp": "2026-03-03T15:02:55", "session_id": "form3_station_fix", "role": "assistant", "content": "What is the vehicle or rig identifier?"}
+{"timestamp": "2026-03-03T15:02:55", "session_id": "form3_station_fix", "role": "user", "content": "vehicle: Unit 4012, odometer start: 45678, fuel level: full, equipment and narcotics check status: all good, notes: PPE stocked and radio OK"}
+{"timestamp": "2026-03-03T15:02:55", "session_id": "form3_station_fix", "role": "assistant", "content": "I captured Form 3 data for medic 10452 on 2026-03-03 (09:00-17:00), station WIMTACH Unit 4012, partner Medic 10309, break 13:00-13:30, vehicle/rig Unit 4012, odometer 45678, fuel Full. Say confirm to submit or cancel to edit."}

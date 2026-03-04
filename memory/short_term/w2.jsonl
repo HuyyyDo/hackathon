@@ -1,0 +1,2 @@
+{"timestamp": "2026-03-03T11:38:49", "session_id": "w2", "role": "user", "content": "weather in Montreal"}
+{"timestamp": "2026-03-03T11:38:51", "session_id": "w2", "role": "assistant", "content": "Current weather in Montreal: Partly cloudy, -2.3°C, wind 9.0 km/h. Today ranges from -12.4°C to -0.2°C with up to 1% precipitation chance."}

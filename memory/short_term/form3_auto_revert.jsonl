@@ -1,0 +1,4 @@
+{"timestamp": "2026-03-03T15:13:32", "session_id": "form3_auto_revert", "role": "user", "content": "start form 3 shift report"}
+{"timestamp": "2026-03-03T15:13:51", "session_id": "form3_auto_revert", "role": "assistant", "content": "Got it. For today you’re on 09:00–17:00 at WIMTACH Unit 4012 with Medic 10309, break window 13:00–13:30. Want me to open a Form 3 with that shift info prefilled? If so, tell me:\n- Did you take your break?\n- Any overtime?\n- Any notable incidents or delays to note?"}
+{"timestamp": "2026-03-03T15:13:53", "session_id": "form3_auto_revert", "role": "user", "content": "what is my schedule today"}
+{"timestamp": "2026-03-03T15:14:03", "session_id": "form3_auto_revert", "role": "assistant", "content": "You’re on 09:00–17:00 at WIMTACH Unit 4012, partnered with Medic 10309. Your break window is 13:00–13:30."}

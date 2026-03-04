@@ -1,0 +1,4 @@
+{"timestamp": "2026-03-03T13:42:21", "session_id": "ui_seq_test", "role": "user", "content": "start form 3 shift report"}
+{"timestamp": "2026-03-03T13:42:36", "session_id": "ui_seq_test", "role": "assistant", "content": "Got it—here are your shift details for today to start your Form 3:\n\n- Date: 2026-03-03\n- Shift: 09:00–17:00\n- Station/Unit: WIMTACH Unit 4012\n- Partner: Medic 10309\n- Break window: 13:00–13:30\n\nWant me to prefill the report with this?"}
+{"timestamp": "2026-03-03T13:42:36", "session_id": "ui_seq_test", "role": "user", "content": "today and confirm"}
+{"timestamp": "2026-03-03T13:42:52", "session_id": "ui_seq_test", "role": "assistant", "content": "Today is March 3, 2026. What would you like me to confirm? If it depends on your location or time zone, let me know where you are."}

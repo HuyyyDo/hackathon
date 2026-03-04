@@ -1,0 +1,19 @@
+{"timestamp": "2026-03-03T11:33:47", "session_id": "demo_tablet_1", "role": "user", "content": "hello"}
+{"timestamp": "2026-03-03T11:34:09", "session_id": "demo_tablet_1", "role": "user", "content": "what's the weather today"}
+{"timestamp": "2026-03-03T11:36:52", "session_id": "demo_tablet_1", "role": "user", "content": "what's the weather today"}
+{"timestamp": "2026-03-03T11:39:13", "session_id": "demo_tablet_1", "role": "user", "content": "what's the weather today"}
+{"timestamp": "2026-03-03T11:41:51", "session_id": "demo_tablet_1", "role": "user", "content": "what's the weather today"}
+{"timestamp": "2026-03-03T11:41:51", "session_id": "demo_tablet_1", "role": "assistant", "content": "Current weather in Toronto: Overcast, 1.4°C, wind 12.4 km/h. Today ranges from -7.6°C to 2.6°C with up to 7% precipitation chance."}
+{"timestamp": "2026-03-03T11:42:25", "session_id": "demo_tablet_1", "role": "user", "content": "what is my name ?"}
+{"timestamp": "2026-03-03T11:42:27", "session_id": "demo_tablet_1", "role": "assistant", "content": "I don't have access to personal information, so I can't tell you your name. But I'm here to help you with any questions or concerns you might have!"}
+{"timestamp": "2026-03-03T11:46:21", "session_id": "demo_tablet_1", "role": "user", "content": "what's my name"}
+{"timestamp": "2026-03-03T11:46:23", "session_id": "demo_tablet_1", "role": "assistant", "content": "I'm sorry, but I don't have access to personal information, so I can't know your name. How can I assist you today?"}
+{"timestamp": "2026-03-03T11:46:54", "session_id": "demo_tablet_1", "role": "user", "content": "what's the weather today"}
+{"timestamp": "2026-03-03T11:46:55", "session_id": "demo_tablet_1", "role": "assistant", "content": "Current weather in Toronto: Overcast, 1.4°C, wind 13.5 km/h. Today ranges from -7.6°C to 2.6°C with up to 7% precipitation chance."}
+{"timestamp": "2026-03-03T11:47:16", "session_id": "demo_tablet_1", "role": "user", "content": "what time is it"}
+{"timestamp": "2026-03-03T11:47:18", "session_id": "demo_tablet_1", "role": "assistant", "content": "I'm sorry, but I can't provide live time data. You can easily check the time on your device or watch!"}
+{"timestamp": "2026-03-03T11:49:28", "session_id": "demo_tablet_1", "role": "user", "content": "my name is Paul"}
+{"timestamp": "2026-03-03T11:49:28", "session_id": "demo_tablet_1", "role": "assistant", "content": "Got it. I will call you Paul."}
+{"timestamp": "2026-03-03T11:49:42", "session_id": "demo_tablet_1", "role": "user", "content": "Okay now what's my name"}
+{"timestamp": "2026-03-03T11:49:43", "session_id": "demo_tablet_1", "role": "assistant", "content": "I'm sorry, but I don't have access to personal data, including your name. How can I assist you today?"}
+{"timestamp": "2026-03-03T14:15:25", "session_id": "demo_tablet_1", "role": "assistant", "content": "post-fix forced-fallback"}

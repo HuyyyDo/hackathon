@@ -1,0 +1,4 @@
+{"timestamp": "2026-03-03T13:53:57", "session_id": "f2_name_required", "role": "user", "content": "start form 2 teddy bear report"}
+{"timestamp": "2026-03-03T13:54:04", "session_id": "f2_name_required", "role": "assistant", "content": "I'll help you start the teddy bear report form. I need to collect a few pieces of information.\n\nLet me start with: What is the recipient's name? (This is optional, you can skip if you prefer not to share)"}
+{"timestamp": "2026-03-03T13:54:04", "session_id": "f2_name_required", "role": "user", "content": "16 female patient"}
+{"timestamp": "2026-03-03T13:54:14", "session_id": "f2_name_required", "role": "assistant", "content": "What is the recipient name?"}

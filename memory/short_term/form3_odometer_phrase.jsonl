@@ -1,0 +1,4 @@
+{"timestamp": "2026-03-03T15:05:17", "session_id": "form3_odometer_phrase", "role": "user", "content": "start form 3 shift report"}
+{"timestamp": "2026-03-03T15:05:17", "session_id": "form3_odometer_phrase", "role": "assistant", "content": "What is the vehicle or rig identifier?"}
+{"timestamp": "2026-03-03T15:05:17", "session_id": "form3_odometer_phrase", "role": "user", "content": "the odometer start from 36000"}
+{"timestamp": "2026-03-03T15:05:17", "session_id": "form3_odometer_phrase", "role": "assistant", "content": "What is the vehicle or rig identifier?"}

@@ -1,0 +1,4 @@
+{"timestamp": "2026-03-03T11:45:49", "session_id": "name_demo", "role": "user", "content": "my name is Alex"}
+{"timestamp": "2026-03-03T11:45:49", "session_id": "name_demo", "role": "assistant", "content": "Got it. I will call you Alex."}
+{"timestamp": "2026-03-03T11:45:49", "session_id": "name_demo", "role": "user", "content": "what is my name?"}
+{"timestamp": "2026-03-03T11:45:49", "session_id": "name_demo", "role": "assistant", "content": "Your name is Alex."}

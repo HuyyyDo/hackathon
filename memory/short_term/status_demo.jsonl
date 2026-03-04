@@ -1,0 +1,2 @@
+{"timestamp": "2026-03-03T11:15:57", "session_id": "status_demo", "role": "user", "content": "show bad checklist items"}
+{"timestamp": "2026-03-03T11:15:57", "session_id": "status_demo", "role": "assistant", "content": "I found 3 matching items with 4 total issues. Overall BAD items: 3 totaling 4 issues."}

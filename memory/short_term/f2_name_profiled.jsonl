@@ -1,0 +1,6 @@
+{"timestamp": "2026-03-03T13:54:14", "session_id": "f2_name_profiled", "role": "user", "content": "my name is Paul"}
+{"timestamp": "2026-03-03T13:54:14", "session_id": "f2_name_profiled", "role": "assistant", "content": "Got it. I will call you Paul."}
+{"timestamp": "2026-03-03T13:54:14", "session_id": "f2_name_profiled", "role": "user", "content": "start form 2 teddy bear report"}
+{"timestamp": "2026-03-03T13:54:22", "session_id": "f2_name_profiled", "role": "assistant", "content": "Hello Paul! I'll help you with the Teddy Bear Form. I have your name already. Could you please tell me:\n\n1. How old is the person who received the teddy bear?\n2. What is their gender? (Male, Female, Other, or Prefer not to say)\n3. Who received the bear? (Patient, Family, Bystander, or Other)"}
+{"timestamp": "2026-03-03T13:54:22", "session_id": "f2_name_profiled", "role": "user", "content": "16 female patient"}
+{"timestamp": "2026-03-03T13:54:30", "session_id": "f2_name_profiled", "role": "assistant", "content": "I captured: name Paul, age 16, gender Female, recipient type Patient. Say confirm to submit or cancel to edit."}

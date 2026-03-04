@@ -1,0 +1,4 @@
+{"timestamp": "2026-03-03T16:22:10", "session_id": "sticky_form_fix", "role": "user", "content": "start form 2 teddy bear report"}
+{"timestamp": "2026-03-03T16:22:23", "session_id": "sticky_form_fix", "role": "assistant", "content": "Sure—let’s start Teddy Bear Form 2. Please provide:\n- Name (or say “unknown”)\n- Age (in years)\n- Gender (Male, Female, Other, or Prefer not to say)\n- Recipient type (Patient, Family, Bystander, or Other)"}
+{"timestamp": "2026-03-03T16:22:23", "session_id": "sticky_form_fix", "role": "user", "content": "send email to magicronaldo37@gmail.com"}
+{"timestamp": "2026-03-03T16:22:23", "session_id": "sticky_form_fix", "role": "assistant", "content": "I paused Form 2. I can send email attachments after a form is submitted. What would you like to do next?"}

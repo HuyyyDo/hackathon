@@ -1,0 +1,4 @@
+{"timestamp": "2026-03-03T11:15:57", "session_id": "confirm_demo", "role": "user", "content": "log teddy bear for 8 year old male bystander"}
+{"timestamp": "2026-03-03T11:15:57", "session_id": "confirm_demo", "role": "assistant", "content": "I captured: age 8, gender Male, recipient type Bystander. Say confirm to submit or cancel to edit."}
+{"timestamp": "2026-03-03T11:15:57", "session_id": "confirm_demo", "role": "user", "content": "confirm"}
+{"timestamp": "2026-03-03T11:15:57", "session_id": "confirm_demo", "role": "assistant", "content": "Perfect. I submitted the report for a 8 year old Male Bystander. TARGET_EMAIL not set; skipped email send."}

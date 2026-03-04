@@ -1,0 +1,2 @@
+{"timestamp": "2026-03-03T11:38:48", "session_id": "w1", "role": "user", "content": "what is the weather today"}
+{"timestamp": "2026-03-03T11:38:49", "session_id": "w1", "role": "assistant", "content": "Current weather in Toronto: Overcast, 1.4°C, wind 12.4 km/h. Today ranges from -7.6°C to 2.6°C with up to 7% precipitation chance."}

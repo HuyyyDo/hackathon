@@ -1,0 +1,2 @@
+{"timestamp": "2026-03-03T16:34:22", "session_id": "email_debug_new_server3", "role": "user", "content": "send email to magicronaldo37@gmail.com"}
+{"timestamp": "2026-03-03T16:34:28", "session_id": "email_debug_new_server3", "role": "assistant", "content": "I couldn't send that email yet: SMTP authentication failed. Check SMTP_USER/SMTP_PASSWORD or use an app password."}
