@@ -455,6 +455,7 @@ const VoiceAssistant = () => {
       }
 
       speakResponse(assistantReply);
+      return data;
 
     } catch (error) {
       console.error("Backend connection error:", error);
@@ -463,6 +464,7 @@ const VoiceAssistant = () => {
         ? error.message
         : 'Unknown backend error.';
       pushChatMessage(activeSessionId, { role: 'ai', text: `Request failed. ${message}` });
+      return null;
     }
   };
 
@@ -587,7 +589,15 @@ const VoiceAssistant = () => {
     if (form4Data.badOnly) parts.push('show bad items only');
     if (form4Data.itemType) parts.push(`${form4Data.itemType} status`);
     if (form4Data.statusFilter) parts.push(`filter ${form4Data.statusFilter}`);
-    await sendToBackend(parts.length ? parts.join(', ') : 'show overall form 4 status summary');
+    const data = await sendToBackend(parts.length ? parts.join(', ') : 'show overall form 4 status summary');
+
+    const printablePath = data?.artifacts?.printable_path;
+    if (printablePath) {
+      const fileName = printablePath.split(/[/\\]/).pop();
+      if (fileName) {
+        window.open(`${API_BASE_URL}/api/generated/${encodeURIComponent(fileName)}`, '_blank');
+      }
+    }
   };
 
   const previewVoice = () => {

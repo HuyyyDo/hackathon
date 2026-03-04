@@ -4,8 +4,10 @@ from dataclasses import dataclass
 from datetime import datetime
 from email.message import EmailMessage
 from pathlib import Path
+import json
 import os
 import smtplib
+import ssl
 import subprocess
 import xml.etree.ElementTree as ET
 
@@ -62,7 +64,7 @@ def _send_via_outlook_desktop(
 
     try:
         result = subprocess.run(
-            ["powershell", "-NoProfile", "-NonInteractive", "-Command", script],
+            ["powershell", "-NoProfile", "-Sta", "-Command", script],
             capture_output=True,
             text=True,
             timeout=45,
@@ -86,12 +88,19 @@ def _resolve_smtp_host(configured_host: str | None, smtp_user: str | None) -> st
     domain = smtp_user.split("@", 1)[1].strip().lower()
     if domain == "gmail.com":
         return "smtp.gmail.com"
-    if domain in {"outlook.com", "hotmail.com", "live.com", "office365.com", "effectiveai.net"}:
+    if domain in {"outlook.com", "hotmail.com", "live.com", "office365.com"}:
         return "smtp.office365.com"
+    if domain == "effectiveai.net":
+        return "smtp.hostedemail.com"
     return None
 
 
-def send_direct_email(target_email: str, subject: str, body: str) -> EmailResult:
+def send_direct_email(
+    target_email: str,
+    subject: str,
+    body: str,
+    attachments: list[str] | None = None,
+) -> EmailResult:
     smtp_host = _resolve_smtp_host(os.getenv("SMTP_HOST"), os.getenv("SMTP_USER"))
     smtp_port = int(os.getenv("SMTP_PORT", "587"))
     smtp_user = os.getenv("SMTP_USER")
@@ -107,25 +116,40 @@ def send_direct_email(target_email: str, subject: str, body: str) -> EmailResult
     msg["To"] = target_email
     msg.set_content(body)
 
+    for attachment_path in attachments or []:
+        file_path = Path(attachment_path)
+        if not file_path.exists() or not file_path.is_file():
+            continue
+
+        suffix = file_path.suffix.lower()
+        if suffix in {".htm", ".html"}:
+            maintype, subtype = "text", "html"
+        elif suffix == ".xml":
+            maintype, subtype = "application", "xml"
+        else:
+            maintype, subtype = "application", "octet-stream"
+
+        msg.add_attachment(
+            file_path.read_bytes(),
+            maintype=maintype,
+            subtype=subtype,
+            filename=file_path.name,
+        )
+
     try:
         with smtplib.SMTP(smtp_host, smtp_port, timeout=15) as server:
-            server.starttls()
+            server.ehlo()
+            server.starttls(context=ssl.create_default_context())
+            server.ehlo()
             server.login(smtp_user, smtp_password)
             server.send_message(msg)
     except smtplib.SMTPAuthenticationError:
-        outlook_result = _send_via_outlook_desktop(target_email, subject, body)
-        if outlook_result.sent:
-            return outlook_result
         return EmailResult(
             False,
-            "SMTP authentication failed. Check SMTP_USER/SMTP_PASSWORD or use an app password. "
-            f"Outlook fallback also failed: {outlook_result.detail}",
+            "SMTP authentication failed. Check SMTP_HOST, SMTP_USER/SMTP_PASSWORD, and provider SMTP auth settings.",
         )
     except Exception as exc:
-        outlook_result = _send_via_outlook_desktop(target_email, subject, body)
-        if outlook_result.sent:
-            return outlook_result
-        return EmailResult(False, f"SMTP send failed: {exc}. Outlook fallback also failed: {outlook_result.detail}")
+        return EmailResult(False, f"SMTP send failed: {exc}")
 
     return EmailResult(True, f"Email sent to {target_email}")
 
@@ -193,18 +217,12 @@ def create_teddy_bear_docs(form_data: dict) -> tuple[str, str]:
 
 
 def _build_occurrence_html(form_data: dict, report_id: str) -> str:
-        rows = "".join(
-                [
-                        f"<tr><th>{key.replace('_', ' ').title()}</th><td>{value}</td></tr>"
-                        for key, value in form_data.items()
-                ]
-        )
         return f"""<!doctype html>
 <html lang=\"en\">
 <head>
     <meta charset=\"utf-8\" />
     <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />
-    <title>Occurrence Report - {report_id}</title>
+    <title>Occurrence Report Form - {report_id}</title>
     <style>
         body {{ font-family: Arial, sans-serif; margin: 32px; color: #111; }}
         h1 {{ margin: 0 0 8px; font-size: 24px; }}
@@ -215,9 +233,19 @@ def _build_occurrence_html(form_data: dict, report_id: str) -> str:
     </style>
 </head>
 <body>
-    <h1>EMS Occurrence Report</h1>
+    <h1>EMS Occurrence Report (Form 1)</h1>
     <div class=\"meta\">Report ID: {report_id}<br/>Generated: {datetime.now().isoformat(timespec='seconds')}</div>
-    <table>{rows}</table>
+    <table>
+        <tr><th>Date</th><td>{form_data.get('date', 'N/A')}</td></tr>
+        <tr><th>Time</th><td>{form_data.get('time', 'N/A')}</td></tr>
+        <tr><th>Classification</th><td>{form_data.get('classification', 'N/A')}</td></tr>
+        <tr><th>Occurrence Type</th><td>{form_data.get('occurrence_type', 'N/A')}</td></tr>
+        <tr><th>Brief Description</th><td>{form_data.get('brief_description', 'N/A')}</td></tr>
+        <tr><th>Requested By</th><td>{form_data.get('requested_by', 'N/A')}</td></tr>
+        <tr><th>Report Creator</th><td>{form_data.get('report_creator', 'N/A')}</td></tr>
+        <tr><th>Call Number</th><td>{form_data.get('call_number', 'N/A') or 'N/A'}</td></tr>
+        <tr><th>Occurrence Reference</th><td>{form_data.get('occurrence_reference', 'N/A') or 'N/A'}</td></tr>
+    </table>
 </body>
 </html>
 """
@@ -298,6 +326,81 @@ def create_shift_report_docs(form_data: dict) -> tuple[str, str]:
         return str(printable_path), str(xml_path)
 
 
+def _build_status_report_html(status_data: dict, report_id: str) -> str:
+        rows_html = ""
+        for row in status_data.get("rows", []):
+                rows_html += (
+                        "<tr>"
+                        f"<td>{row.get('item_type', '')}</td>"
+                        f"<td>{row.get('description', '')}</td>"
+                        f"<td>{row.get('status', '')}</td>"
+                        f"<td>{row.get('issues', '')}</td>"
+                        f"<td>{row.get('notes', '')}</td>"
+                        "</tr>"
+                )
+
+        summary = status_data.get("summary", {})
+        summary_html = ""
+        if summary:
+                summary_html = (
+                        "<div class=\"meta\">"
+                        f"BAD items: {summary.get('bad_items', 0)}"
+                        f" | BAD issues total: {summary.get('bad_issue_total', 0)}"
+                        "</div>"
+                )
+
+        return f"""<!doctype html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"utf-8\" />
+    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />
+    <title>Form 4 Status Report - {report_id}</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 32px; color: #111; }}
+        h1 {{ margin: 0 0 8px; font-size: 24px; }}
+        .meta {{ color: #555; margin: 8px 0 18px; }}
+        table {{ border-collapse: collapse; width: 100%; max-width: 980px; }}
+        th, td {{ border: 1px solid #ddd; text-align: left; padding: 10px; vertical-align: top; }}
+        th {{ background: #f6f6f6; }}
+    </style>
+</head>
+<body>
+    <h1>Paramedic Status Report (Form 4)</h1>
+    <div class=\"meta\">Report ID: {report_id}<br/>Generated: {datetime.now().isoformat(timespec='seconds')}</div>
+    {summary_html}
+    <table>
+        <thead>
+            <tr><th>Item Type</th><th>Description</th><th>Status</th><th>Issues</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+            {rows_html}
+        </tbody>
+    </table>
+</body>
+</html>
+"""
+
+
+def create_status_report_docs(status_data: dict) -> tuple[str, str]:
+        out_dir = _ensure_output_dir()
+        report_id = f"STATUS_{_timestamp_id()}"
+
+        printable_path = out_dir / f"{report_id}_printable.html"
+        xml_path = out_dir / f"{report_id}.xml"
+
+        printable_path.write_text(_build_status_report_html(status_data, report_id), encoding="utf-8")
+
+        root = ET.Element("statusReport")
+        ET.SubElement(root, "reportId").text = report_id
+        ET.SubElement(root, "generatedAt").text = datetime.now().isoformat(timespec="seconds")
+        ET.SubElement(root, "payloadJson").text = json.dumps(status_data, ensure_ascii=False)
+
+        tree = ET.ElementTree(root)
+        tree.write(xml_path, encoding="utf-8", xml_declaration=True)
+
+        return str(printable_path), str(xml_path)
+
+
 def email_target_address(printable_path: str, xml_path: str, target_email: str | None = None) -> EmailResult:
     smtp_host = _resolve_smtp_host(os.getenv("SMTP_HOST"), os.getenv("SMTP_USER"))
     smtp_port = int(os.getenv("SMTP_PORT", "587"))
@@ -313,10 +416,10 @@ def email_target_address(printable_path: str, xml_path: str, target_email: str |
         return EmailResult(False, "SMTP credentials not configured; artifacts generated locally.")
 
     msg = EmailMessage()
-    msg["Subject"] = "Teddy Bear Tracking Form Submission"
+    msg["Subject"] = "Paramedic AI Form Submission"
     msg["From"] = smtp_from
     msg["To"] = recipient
-    msg.set_content("Attached are the print-ready form and XML payload for the teddy bear submission.")
+    msg.set_content("Attached are the print-ready form and XML payload for this submission.")
 
     printable_file = Path(printable_path)
     xml_file = Path(xml_path)
@@ -336,32 +439,17 @@ def email_target_address(printable_path: str, xml_path: str, target_email: str |
 
     try:
         with smtplib.SMTP(smtp_host, smtp_port, timeout=15) as server:
-            server.starttls()
+            server.ehlo()
+            server.starttls(context=ssl.create_default_context())
+            server.ehlo()
             server.login(smtp_user, smtp_password)
             server.send_message(msg)
     except smtplib.SMTPAuthenticationError:
-        outlook_result = _send_via_outlook_desktop(
-            recipient,
-            "Teddy Bear Tracking Form Submission",
-            "Attached are the print-ready form and XML payload for the teddy bear submission.",
-            [str(printable_file), str(xml_file)],
-        )
-        if outlook_result.sent:
-            return outlook_result
         return EmailResult(
             False,
-            "SMTP authentication failed. Check SMTP_USER/SMTP_PASSWORD or use an app password. "
-            f"Outlook fallback also failed: {outlook_result.detail}",
+            "SMTP authentication failed. Check SMTP_HOST, SMTP_USER/SMTP_PASSWORD, and provider SMTP auth settings.",
         )
     except Exception as exc:
-        outlook_result = _send_via_outlook_desktop(
-            recipient,
-            "Teddy Bear Tracking Form Submission",
-            "Attached are the print-ready form and XML payload for the teddy bear submission.",
-            [str(printable_file), str(xml_file)],
-        )
-        if outlook_result.sent:
-            return outlook_result
-        return EmailResult(False, f"SMTP send failed: {exc}. Outlook fallback also failed: {outlook_result.detail}")
+        return EmailResult(False, f"SMTP send failed: {exc}")
 
     return EmailResult(True, f"Email sent to {recipient}")

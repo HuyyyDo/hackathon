@@ -1,0 +1,20 @@
+{"timestamp": "2026-03-04T01:19:20", "session_id": "form1_all_data_1", "role": "user", "content": "reset task"}
+{"timestamp": "2026-03-04T01:19:20", "session_id": "form1_all_data_1", "role": "assistant", "content": "Session reset. I am back in routing mode. Tell me what you want to do next."}
+{"timestamp": "2026-03-04T01:19:20", "session_id": "form1_all_data_1", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "assistant", "content": "OpenRouter authentication failed, so I switched to local mode. Please repeat your request. [error: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 4000. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_3AT0QNivaPSp4ctH3WmFn6FgE2l'}]"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "assistant", "content": "What is the occurrence date?"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "user", "content": "2026-03-04"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "assistant", "content": "What is the occurrence time?"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "user", "content": "13:20"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "assistant", "content": "What is the classification (Safety, Vehicle, Patient, Equipment, Other)?"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "user", "content": "vehicle"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "assistant", "content": "What is the occurrence type (Collision, Near Miss, Injury, Equipment, Non-call, Other)?"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "user", "content": "collision"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "assistant", "content": "Please provide a brief description of the occurrence."}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "user", "content": "I hit a car"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "assistant", "content": "Who requested this report?"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "user", "content": "paul requested this report"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "assistant", "content": "Who is completing this report?"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "user", "content": "paul completed this report"}
+{"timestamp": "2026-03-04T01:19:21", "session_id": "form1_all_data_1", "role": "assistant", "content": "I captured Form 1: date 2026-03-04, time 13:20, classification Vehicle, type Collision, requested by Paul, creator Paul. Say confirm to submit or cancel to edit."}

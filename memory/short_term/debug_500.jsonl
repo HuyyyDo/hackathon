@@ -2,3 +2,5 @@
 {"timestamp": "2026-03-03T14:47:48", "session_id": "debug_500", "role": "assistant", "content": "Hi there! How can I help you today? \nIf you’re having a medical emergency right now—like chest pain, severe trouble breathing, heavy bleeding, or sudden confusion—call your local emergency number immediately."}
 {"timestamp": "2026-03-03T14:47:55", "session_id": "debug_500", "role": "user", "content": "reset task"}
 {"timestamp": "2026-03-03T14:47:55", "session_id": "debug_500", "role": "assistant", "content": "Session reset. I am back in routing mode. Tell me what you want to do next."}
+{"timestamp": "2026-03-04T00:04:40", "session_id": "debug_500", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-04T00:04:43", "session_id": "debug_500", "role": "assistant", "content": "I hit a temporary backend issue. Please try again. If this keeps happening, say reset task and retry your request. [error: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}]"}

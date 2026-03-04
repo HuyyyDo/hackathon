@@ -1,0 +1,10 @@
+{"timestamp": "2026-03-04T00:05:21", "session_id": "debug_ui", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-04T00:05:21", "session_id": "debug_ui", "role": "assistant", "content": "I hit a temporary backend issue. Please try again. If this keeps happening, say reset task and retry your request. [error: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}]"}
+{"timestamp": "2026-03-04T00:05:21", "session_id": "debug_ui", "role": "user", "content": "start form 2 teddy bear report"}
+{"timestamp": "2026-03-04T00:05:21", "session_id": "debug_ui", "role": "assistant", "content": "I hit a temporary backend issue. Please try again. If this keeps happening, say reset task and retry your request. [error: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}]"}
+{"timestamp": "2026-03-04T00:05:21", "session_id": "debug_ui", "role": "user", "content": "start form 3"}
+{"timestamp": "2026-03-04T00:05:21", "session_id": "debug_ui", "role": "assistant", "content": "I hit a temporary backend issue. Please try again. If this keeps happening, say reset task and retry your request. [error: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}]"}
+{"timestamp": "2026-03-04T00:05:21", "session_id": "debug_ui", "role": "user", "content": "start form 4"}
+{"timestamp": "2026-03-04T00:05:21", "session_id": "debug_ui", "role": "assistant", "content": "I found 11 matching items with 9 total issues. Overall BAD items: 3 totaling 4 issues."}
+{"timestamp": "2026-03-04T00:05:21", "session_id": "debug_ui", "role": "user", "content": "what's the weather today"}
+{"timestamp": "2026-03-04T00:05:22", "session_id": "debug_ui", "role": "assistant", "content": "Current weather in Toronto: Clear sky, -1.9°C, wind 8.3 km/h. Today ranges from -2.8°C to 5.6°C with up to 0% precipitation chance."}

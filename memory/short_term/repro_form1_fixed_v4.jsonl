@@ -1,0 +1,18 @@
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "assistant", "content": "What is the occurrence date?"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "assistant", "content": "What is the occurrence date?"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "user", "content": "2026-03-04"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "assistant", "content": "What is the occurrence time?"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "user", "content": "13:45"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "assistant", "content": "What is the classification (Safety, Vehicle, Patient, Equipment, Other)?"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "user", "content": "safety"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "assistant", "content": "What is the occurrence type (Collision, Near Miss, Injury, Equipment, Non-call, Other)?"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "user", "content": "near miss"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "assistant", "content": "Please provide a brief description of the occurrence."}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "user", "content": "unit door struck curb"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "assistant", "content": "Who requested this report?"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "user", "content": "requested by Paul"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "assistant", "content": "Who is completing this report?"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "user", "content": "creator Paul"}
+{"timestamp": "2026-03-04T00:21:08", "session_id": "repro_form1_fixed_v4", "role": "assistant", "content": "I captured Form 1: date 2026-03-04, time 13:45, classification Safety, type Near Miss, requested by Paul, creator Paul. Say confirm to submit or cancel to edit."}

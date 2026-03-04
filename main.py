@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from openai import AsyncOpenAI
 import os
@@ -14,6 +15,7 @@ from document_generator import (
     create_teddy_bear_docs,
     create_occurrence_docs,
     create_shift_report_docs,
+    create_status_report_docs,
     email_target_address,
     send_direct_email,
 )
@@ -93,11 +95,28 @@ client = (
     else None
 )
 
+
+def _is_llm_auth_error(exc: Exception) -> bool:
+    message = str(exc).lower()
+    return (
+        "error code: 401" in message
+        or "error code: 402" in message
+        or "user not found" in message
+        or "invalid api key" in message
+        or "unauthorized" in message
+        or "requires more credits" in message
+        or "insufficient credits" in message
+        or "quota" in message
+    )
+
 # In-memory database to remember the conversation for the live demo
 chat_memory = {}
 current_task = {} 
 pending_confirmation = {}
 user_profiles = {}
+latest_form_artifacts = {}
+latest_form_payload = {}
+latest_form_type = {}
 
 class ChatInput(BaseModel):
     session_id: str = "demo_tablet_1"
@@ -138,7 +157,20 @@ def _extract_teddy_fields(memory: list[dict]) -> dict:
         if message.get("role") != "user":
             continue
 
-        content = message.get("content", "").lower()
+        raw_content = message.get("content", "").strip()
+        content = raw_content.lower()
+        prev_assistant = ""
+        if index > 0 and memory[index - 1].get("role") == "assistant":
+            prev_assistant = str(memory[index - 1].get("content", "")).lower()
+
+        if "name" not in extracted:
+            explicit_name = re.search(r"(?:recipient\s+name|name\s+is|my\s+name\s+is)\s+([A-Za-z][A-Za-z\s\-']{0,40})", raw_content, flags=re.IGNORECASE)
+            if explicit_name:
+                extracted["name"] = explicit_name.group(1).strip().title()
+            elif "recipient name" in prev_assistant:
+                name_candidate = raw_content.strip(" .,!?:;\"")
+                if re.fullmatch(r"[A-Za-z][A-Za-z\s\-']{0,40}", name_candidate):
+                    extracted["name"] = name_candidate.title()
 
         for age_match in re.finditer(r"\b(\d{1,3})\b", content):
             age_candidate = int(age_match.group(1))
@@ -171,6 +203,9 @@ def _extract_occurrence_fields(memory: list[dict], default_name: str = "") -> di
 
         content = message.get("content", "")
         content_l = content.lower()
+        prev_assistant = ""
+        if index > 0 and memory[index - 1].get("role") == "assistant":
+            prev_assistant = str(memory[index - 1].get("content", "")).lower()
 
         date_match = re.search(r"\b(\d{4}-\d{2}-\d{2}|\d{2}/\d{2}/\d{4})\b", content)
         if date_match:
@@ -199,12 +234,41 @@ def _extract_occurrence_fields(memory: list[dict], default_name: str = "") -> di
         req_match = re.search(r"requested\s+by\s+([A-Za-z][A-Za-z\s\-']{1,40})", content, flags=re.IGNORECASE)
         if req_match:
             extracted["requested_by"] = req_match.group(1).strip().title()
+        else:
+            req_alt_match = re.search(r"\b([A-Za-z][A-Za-z\s\-']{1,40})\s+requested(?:\s+this\s+report)?\b", content, flags=re.IGNORECASE)
+            if req_alt_match:
+                extracted["requested_by"] = req_alt_match.group(1).strip().title()
+            elif "who requested this report" in prev_assistant:
+                requester_candidate = content.strip(" .,!?:;\"")
+                requester_candidate = re.sub(r"\s+requested(?:\s+this\s+report)?$", "", requester_candidate, flags=re.IGNORECASE).strip()
+                if re.fullmatch(r"[A-Za-z][A-Za-z\s\-']{1,40}", requester_candidate):
+                    extracted["requested_by"] = requester_candidate.title()
 
         creator_match = re.search(r"(?:creator|completed\s+by|report\s+creator)\s+([A-Za-z][A-Za-z\s\-']{1,40})", content, flags=re.IGNORECASE)
         if creator_match:
             extracted["report_creator"] = creator_match.group(1).strip().title()
+        else:
+            creator_alt_match = re.search(
+                r"\b([A-Za-z][A-Za-z\s\-']{1,40})\s+(?:completed|is\s+completing)(?:\s+this\s+report)?\b",
+                content,
+                flags=re.IGNORECASE,
+            )
+            if creator_alt_match:
+                extracted["report_creator"] = creator_alt_match.group(1).strip().title()
+            elif "who is completing this report" in prev_assistant:
+                creator_candidate = content.strip(" .,!?:;\"")
+                creator_candidate = re.sub(
+                    r"\s+(?:completed|is\s+completing)(?:\s+this\s+report)?$",
+                    "",
+                    creator_candidate,
+                    flags=re.IGNORECASE,
+                ).strip()
+                if re.fullmatch(r"[A-Za-z][A-Za-z\s\-']{1,40}", creator_candidate):
+                    extracted["report_creator"] = creator_candidate.title()
 
         if "description" in content_l:
+            extracted["brief_description"] = content.strip()
+        elif "brief description" in prev_assistant and content.strip():
             extracted["brief_description"] = content.strip()
         elif len(content.split()) >= 6 and "brief_description" not in extracted:
             extracted["brief_description"] = content.strip()
@@ -249,6 +313,31 @@ def _build_status_response_from_text(text: str) -> tuple[dict, str]:
         )
 
     return parsed, ai_reply
+
+
+def _compact_status_form_data(parsed: dict) -> dict:
+    summary = parsed.get("summary", {}) if isinstance(parsed, dict) else {}
+    return {
+        "found": bool(parsed.get("found")) if isinstance(parsed, dict) else False,
+        "count": int(parsed.get("count", 0)) if isinstance(parsed, dict) else 0,
+        "total_issues": int(parsed.get("total_issues", 0)) if isinstance(parsed, dict) else 0,
+        "bad_items": int(summary.get("bad_items", 0)) if isinstance(summary, dict) else 0,
+        "bad_issue_total": int(summary.get("bad_issue_total", 0)) if isinstance(summary, dict) else 0,
+    }
+
+
+def _normalize_occurrence_form_data(data: dict) -> dict:
+    return {
+        "date": str(data.get("date", "")).strip(),
+        "time": str(data.get("time", "")).strip(),
+        "classification": str(data.get("classification", "")).strip(),
+        "occurrence_type": str(data.get("occurrence_type", "")).strip(),
+        "brief_description": str(data.get("brief_description", "")).strip(),
+        "requested_by": str(data.get("requested_by", "")).strip(),
+        "report_creator": str(data.get("report_creator", "")).strip(),
+        "call_number": str(data.get("call_number", "")).strip(),
+        "occurrence_reference": str(data.get("occurrence_reference", "")).strip(),
+    }
 
 
 def _extract_shift_fields(memory: list[dict], default_name: str = "") -> dict:
@@ -357,7 +446,8 @@ def _get_next_shift_question(missing_field: str) -> str:
 
 def _is_confirmation(text: str) -> bool:
     normalized = text.strip().lower()
-    return normalized in {"yes", "y", "confirm", "confirmed", "submit", "go ahead", "correct"}
+    exact = {"yes", "y", "confirm", "confirmed", "submit", "go ahead", "correct"}
+    return normalized in exact or bool(re.search(r"\b(confirm|confirmed|submit)\b", normalized))
 
 
 def _is_cancellation(text: str) -> bool:
@@ -418,6 +508,29 @@ def _extract_direct_email_request(text: str) -> dict | None:
         body = remainder
 
     return {"target_email": target_email, "subject": subject, "body": body}
+
+
+def _format_form_summary(form_type: str | None, payload: dict | None) -> str:
+    if not payload:
+        return "Hello,\n\nThis is a direct email sent from the Paramedic AI assistant.\n\nRegards,\nParamedic AI"
+
+    label = {
+        "teddy_bear": "Teddy Bear Tracking Form",
+        "occurrence_report": "Occurrence Report",
+        "shift_report": "Shift Report",
+        "status_report": "Status Report",
+    }.get(form_type or "", "Form")
+
+    lines = [
+        "Hello,",
+        "",
+        f"This is a {label} summary from the Paramedic AI assistant.",
+        "",
+    ]
+    for key, value in payload.items():
+        lines.append(f"{key.replace('_', ' ').title()}: {value}")
+    lines.extend(["", "Regards,", "Paramedic AI"])
+    return "\n".join(lines)
 
 
 def _keyword_route_intent(text: str) -> str | None:
@@ -586,6 +699,15 @@ async def get_live_context(location: str | None = None):
         "weather": weather,
     }
 
+
+@app.get("/api/generated/{file_name}")
+async def get_generated_file(file_name: str):
+    safe_name = Path(file_name).name
+    file_path = Path(__file__).resolve().parent / "generated" / safe_name
+    if not file_path.exists() or not file_path.is_file():
+        raise HTTPException(status_code=404, detail="Generated file not found")
+    return FileResponse(path=file_path)
+
 # --- 2. TOOLS & SCHEMAS ---
 class TeddyBearForm(BaseModel):
     name: str | None = Field(default=None, description="The recipient or patient name, if provided.")
@@ -673,6 +795,13 @@ async def process_chat(input_data: ChatInput):
     if session not in user_profiles:
         user_profiles[session] = {"name": os.getenv("PARAMEDIC_NAME", "").strip()}
 
+    if session not in latest_form_artifacts:
+        latest_form_artifacts[session] = None
+    if session not in latest_form_payload:
+        latest_form_payload[session] = None
+    if session not in latest_form_type:
+        latest_form_type[session] = None
+
     # Add user's new message to the memory
     chat_memory[session].append({"role": "user", "content": user_text})
     _log_short_term(session, "user", user_text)
@@ -681,6 +810,9 @@ async def process_chat(input_data: ChatInput):
         chat_memory[session] = []
         current_task[session] = "routing"
         pending_confirmation[session] = None
+        latest_form_artifacts[session] = None
+        latest_form_payload[session] = None
+        latest_form_type[session] = None
         reply = "Session reset. I am back in routing mode. Tell me what you want to do next."
         chat_memory[session].append({"role": "assistant", "content": reply})
         _log_short_term(session, "assistant", reply)
@@ -706,14 +838,41 @@ async def process_chat(input_data: ChatInput):
         return {"status": "chat", "ai_audio_reply": reply}
 
     direct_email_request = _extract_direct_email_request(user_text)
-    if direct_email_request:
+    if direct_email_request and pending_confirmation[session] is None:
+        attachments = []
+        session_artifacts = latest_form_artifacts.get(session)
+        if session_artifacts:
+            printable_path = session_artifacts.get("printable_path")
+            xml_path = session_artifacts.get("xml_path")
+            if printable_path:
+                attachments.append(printable_path)
+            if xml_path:
+                attachments.append(xml_path)
+
+        default_direct_body = "Hello,\n\nThis is a direct email sent from the Paramedic AI assistant.\n\nRegards,\nParamedic AI"
+        direct_body = direct_email_request["body"]
+        direct_subject = direct_email_request["subject"]
+        if direct_body == default_direct_body and latest_form_payload.get(session):
+            direct_body = _format_form_summary(latest_form_type.get(session), latest_form_payload.get(session))
+            if direct_subject == "Paramedic AI Assistant Message":
+                friendly_subject = {
+                    "teddy_bear": "Teddy Bear Form Summary",
+                    "occurrence_report": "Occurrence Report Summary",
+                    "shift_report": "Shift Report Summary",
+                }.get(latest_form_type.get(session), "Paramedic AI Form Summary")
+                direct_subject = friendly_subject
+
         email_result = send_direct_email(
             direct_email_request["target_email"],
-            direct_email_request["subject"],
-            direct_email_request["body"],
+            direct_subject,
+            direct_body,
+            attachments=attachments,
         )
         if email_result.sent:
-            reply = f"{email_result.detail}."
+            if attachments:
+                reply = f"{email_result.detail}. I included the latest form files as attachments."
+            else:
+                reply = f"{email_result.detail}."
             status = "complete"
         else:
             reply = f"I couldn't send that email yet: {email_result.detail}"
@@ -728,6 +887,7 @@ async def process_chat(input_data: ChatInput):
                 "sent": email_result.sent,
                 "detail": email_result.detail,
                 "to": direct_email_request["target_email"],
+                "attachments": attachments,
             },
         }
 
@@ -819,9 +979,13 @@ async def process_chat(input_data: ChatInput):
 
             if pending_confirmation[session]:
                 if _is_confirmation(user_text):
-                    extracted_data = pending_confirmation[session]
+                    extracted_data = _normalize_occurrence_form_data(pending_confirmation[session])
                     printable_path, xml_path = create_occurrence_docs(extracted_data)
-                    email_result = email_target_address(printable_path, xml_path)
+                    target_email = None
+                    direct_request = _extract_direct_email_request(user_text)
+                    if direct_request:
+                        target_email = direct_request["target_email"]
+                    email_result = email_target_address(printable_path, xml_path, target_email=target_email)
 
                     _log_long_term(
                         "occurrence_report",
@@ -836,6 +1000,9 @@ async def process_chat(input_data: ChatInput):
                     pending_confirmation[session] = None
                     chat_memory[session] = []
                     current_task[session] = "routing"
+                    latest_form_artifacts[session] = {"printable_path": printable_path, "xml_path": xml_path}
+                    latest_form_payload[session] = extracted_data
+                    latest_form_type[session] = "occurrence_report"
 
                     success_msg = f"Occurrence report submitted. {email_result.detail}"
                     _log_short_term(session, "assistant", success_msg)
@@ -872,9 +1039,11 @@ async def process_chat(input_data: ChatInput):
                         "report_creator": "Who is completing this report?",
                     }
                     ask = prompts[missing[0]]
+                    chat_memory[session].append({"role": "assistant", "content": ask})
                     _log_short_term(session, "assistant", ask)
                     return {"status": "collecting", "ai_audio_reply": ask}
 
+                extracted_data = _normalize_occurrence_form_data(extracted_data)
                 pending_confirmation[session] = extracted_data
                 confirm_msg = (
                     f"I captured Form 1: date {extracted_data['date']}, time {extracted_data['time']}, "
@@ -911,6 +1080,7 @@ async def process_chat(input_data: ChatInput):
                 if not extracted_data.get("report_creator") and user_profiles[session].get("name"):
                     extracted_data["report_creator"] = user_profiles[session]["name"]
 
+                extracted_data = _normalize_occurrence_form_data(extracted_data)
                 pending_confirmation[session] = extracted_data
                 confirm_msg = (
                     f"I captured Form 1: date {extracted_data['date']}, time {extracted_data['time']}, "
@@ -966,7 +1136,11 @@ async def process_chat(input_data: ChatInput):
                 if _is_confirmation(user_text):
                     extracted_data = pending_confirmation[session]
                     pdf_path, xml_path = create_teddy_bear_docs(extracted_data)
-                    email_result = email_target_address(pdf_path, xml_path)
+                    target_email = None
+                    direct_request = _extract_direct_email_request(user_text)
+                    if direct_request:
+                        target_email = direct_request["target_email"]
+                    email_result = email_target_address(pdf_path, xml_path, target_email=target_email)
 
                     _log_long_term(
                         "teddy_bear",
@@ -981,6 +1155,9 @@ async def process_chat(input_data: ChatInput):
                     pending_confirmation[session] = None
                     chat_memory[session] = []
                     current_task[session] = "routing"
+                    latest_form_artifacts[session] = {"printable_path": pdf_path, "xml_path": xml_path}
+                    latest_form_payload[session] = extracted_data
+                    latest_form_type[session] = "teddy_bear"
 
                     success_msg = (
                         f"Perfect. I submitted the report for a {extracted_data['age']} year old "
@@ -1164,13 +1341,24 @@ async def process_chat(input_data: ChatInput):
         if current_task[session] == "form_status_query":
             if not client:
                 parsed, ai_reply = _build_status_response_from_text(user_text)
+                compact = _compact_status_form_data(parsed)
+                printable_path, xml_path = create_status_report_docs(parsed)
 
                 _log_long_term("status_report", session, parsed)
+                latest_form_artifacts[session] = {"printable_path": printable_path, "xml_path": xml_path}
+                latest_form_payload[session] = compact
+                latest_form_type[session] = "status_report"
 
                 chat_memory[session] = []
                 current_task[session] = "routing"
                 _log_short_term(session, "assistant", ai_reply)
-                return {"status": "complete", "status_report": parsed, "ai_audio_reply": ai_reply}
+                return {
+                    "status": "complete",
+                    "status_report": parsed,
+                    "form_data": compact,
+                    "artifacts": {"printable_path": printable_path, "xml_path": xml_path},
+                    "ai_audio_reply": ai_reply,
+                }
 
             agent_4_prompt = {"role": "system", "content": """
             You are the Status Analyst for Form 4. Use the check_status_report tool to answer checklist/status questions.
@@ -1220,7 +1408,13 @@ async def process_chat(input_data: ChatInput):
             except Exception:
                 parsed, ai_reply = _build_status_response_from_text(user_text)
 
+            compact = _compact_status_form_data(parsed)
+            printable_path, xml_path = create_status_report_docs(parsed)
+
             _log_long_term("status_report", session, parsed)
+            latest_form_artifacts[session] = {"printable_path": printable_path, "xml_path": xml_path}
+            latest_form_payload[session] = compact
+            latest_form_type[session] = "status_report"
             chat_memory[session] = []
             current_task[session] = "routing"
             _log_short_term(session, "assistant", ai_reply)
@@ -1228,10 +1422,25 @@ async def process_chat(input_data: ChatInput):
             return {
                 "status": "complete",
                 "status_report": parsed,
+                "form_data": compact,
+                "artifacts": {"printable_path": printable_path, "xml_path": xml_path},
                 "ai_audio_reply": ai_reply,
             }
 
     except Exception as e:
+        if _is_llm_auth_error(e):
+            globals()["client"] = None
+            current_task[session] = "routing"
+            pending_confirmation[session] = None
+            fallback_reply = "OpenRouter authentication failed, so I switched to local mode. Please repeat your request."
+            chat_memory[session].append({"role": "assistant", "content": fallback_reply})
+            _log_short_term(session, "assistant", f"{fallback_reply} [error: {str(e)}]")
+            return {
+                "status": "chat",
+                "ai_audio_reply": fallback_reply,
+                "error": "llm_auth_failed_local_mode",
+            }
+
         current_task[session] = "routing"
         pending_confirmation[session] = None
         fallback_reply = "I hit a temporary backend issue. Please try again. If this keeps happening, say reset task and retry your request."
