@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "Paramedic Assistant",
+    "slug": "paramedic-assistant",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0f172a"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0f172a"
+      }
+    },
+    "extra": {
+      "API_BASE_URL": "http://10.24.56.186:8000"
+    }
+  }
+}

@@ -28,3 +28,63 @@
 {"timestamp": "2026-03-04T01:16:47", "session_id": "session_1772604688482", "role": "assistant", "content": "Email sent to huyhoang.ais@gmail.com."}
 {"timestamp": "2026-03-04T01:19:42", "session_id": "session_1772604688482", "role": "user", "content": "send email to huyhoang.ais@gmail.com"}
 {"timestamp": "2026-03-04T01:19:44", "session_id": "session_1772604688482", "role": "assistant", "content": "Email sent to huyhoang.ais@gmail.com."}
+{"timestamp": "2026-03-04T10:36:11", "session_id": "session_1772604688482", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-04T10:36:11", "session_id": "session_1772604688482", "role": "assistant", "content": "What is the occurrence date?"}
+{"timestamp": "2026-03-04T10:40:32", "session_id": "session_1772604688482", "role": "user", "content": "11/09/2025"}
+{"timestamp": "2026-03-04T10:40:32", "session_id": "session_1772604688482", "role": "assistant", "content": "What is the occurrence time?"}
+{"timestamp": "2026-03-04T10:40:40", "session_id": "session_1772604688482", "role": "user", "content": "12:36"}
+{"timestamp": "2026-03-04T10:40:40", "session_id": "session_1772604688482", "role": "assistant", "content": "What is the classification (Safety, Vehicle, Patient, Equipment, Other)?"}
+{"timestamp": "2026-03-04T10:40:49", "session_id": "session_1772604688482", "role": "user", "content": "Vehicle"}
+{"timestamp": "2026-03-04T10:40:49", "session_id": "session_1772604688482", "role": "assistant", "content": "What is the occurrence type (Collision, Near Miss, Injury, Equipment, Non-call, Other)?"}
+{"timestamp": "2026-03-04T10:41:00", "session_id": "session_1772604688482", "role": "user", "content": "Collision"}
+{"timestamp": "2026-03-04T10:41:00", "session_id": "session_1772604688482", "role": "assistant", "content": "Please provide a brief description of the occurrence."}
+{"timestamp": "2026-03-04T10:41:10", "session_id": "session_1772604688482", "role": "user", "content": "Another car hit and run me"}
+{"timestamp": "2026-03-04T10:41:10", "session_id": "session_1772604688482", "role": "assistant", "content": "Who requested this report?"}
+{"timestamp": "2026-03-04T10:41:16", "session_id": "session_1772604688482", "role": "user", "content": "Paul requested"}
+{"timestamp": "2026-03-04T10:41:16", "session_id": "session_1772604688482", "role": "assistant", "content": "Who is completing this report?"}
+{"timestamp": "2026-03-04T10:41:23", "session_id": "session_1772604688482", "role": "user", "content": "Paul completed the report"}
+{"timestamp": "2026-03-04T10:41:23", "session_id": "session_1772604688482", "role": "assistant", "content": "I captured Form 1: date 11/09/2025, time 12:36, classification Other, type Other, requested by Paul, creator Paul. Say confirm to submit or cancel to edit."}
+{"timestamp": "2026-03-04T10:44:51", "session_id": "session_1772604688482", "role": "user", "content": "submit and send email to buivietphu12345678@gmail.com"}
+{"timestamp": "2026-03-04T10:44:53", "session_id": "session_1772604688482", "role": "assistant", "content": "Occurrence report submitted. Email sent to buivietphu12345678@gmail.com"}
+{"timestamp": "2026-03-04T11:00:03", "session_id": "session_1772604688482", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-04T11:00:06", "session_id": "session_1772604688482", "role": "assistant", "content": "OpenRouter authentication failed, so I switched to local mode. Please repeat your request. [error: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}]"}
+{"timestamp": "2026-03-04T11:00:18", "session_id": "session_1772604688482", "role": "user", "content": "start form 2 teddy bear report"}
+{"timestamp": "2026-03-04T11:00:18", "session_id": "session_1772604688482", "role": "assistant", "content": "What is the recipient name?"}
+{"timestamp": "2026-03-04T11:00:32", "session_id": "session_1772604688482", "role": "user", "content": "my name is Cliff"}
+{"timestamp": "2026-03-04T11:00:32", "session_id": "session_1772604688482", "role": "assistant", "content": "Got it. I will call you Cliff."}
+{"timestamp": "2026-03-04T11:00:43", "session_id": "session_1772604688482", "role": "user", "content": "I'm 12 years old and I'm a female"}
+{"timestamp": "2026-03-04T11:00:43", "session_id": "session_1772604688482", "role": "assistant", "content": "Who received it (Patient, Family, Bystander, Other)?"}
+{"timestamp": "2026-03-04T11:00:54", "session_id": "session_1772604688482", "role": "user", "content": "I'm family and okay that's it"}
+{"timestamp": "2026-03-04T11:00:54", "session_id": "session_1772604688482", "role": "assistant", "content": "I captured: name Cliff, age 12, gender Female, recipient type Family. Say confirm to submit or cancel to edit."}
+{"timestamp": "2026-03-04T11:01:06", "session_id": "session_1772604688482", "role": "user", "content": "confirm and send email to"}
+{"timestamp": "2026-03-04T11:01:09", "session_id": "session_1772604688482", "role": "assistant", "content": "Perfect. I submitted the report for a 12 year old Female Family. Email sent to Team10@EffectiveAI.net"}
+{"timestamp": "2026-03-04T11:01:32", "session_id": "session_1772604688482", "role": "user", "content": "send email to li1785458273@gmail.com"}
+{"timestamp": "2026-03-04T11:01:35", "session_id": "session_1772604688482", "role": "assistant", "content": "Email sent to li1785458273@gmail.com. I included the latest form files as attachments."}
+{"timestamp": "2026-03-04T11:08:29", "session_id": "session_1772604688482", "role": "user", "content": "start form 3 shift report"}
+{"timestamp": "2026-03-04T11:08:29", "session_id": "session_1772604688482", "role": "assistant", "content": "You are scheduled on 2026-03-04 from 09:00 to 17:00 at WIMTACH Unit 4012 with Medic 10309. Break window is 12:30-13:00."}
+{"timestamp": "2026-03-04T11:08:45", "session_id": "session_1772604688482", "role": "user", "content": "start form 4 status report"}
+{"timestamp": "2026-03-04T11:08:45", "session_id": "session_1772604688482", "role": "assistant", "content": "I found 11 matching items with 9 total issues. Overall BAD items: 3 totaling 4 issues."}
+{"timestamp": "2026-03-04T11:08:56", "session_id": "session_1772604688482", "role": "user", "content": "start form 2 teddy bear report"}
+{"timestamp": "2026-03-04T11:08:56", "session_id": "session_1772604688482", "role": "assistant", "content": "What is the recipient gender (Male, Female, Other, Prefer not to say)?"}
+{"timestamp": "2026-03-04T11:09:10", "session_id": "session_1772604688482", "role": "user", "content": "start form 1 occurrence report"}
+{"timestamp": "2026-03-04T11:09:10", "session_id": "session_1772604688482", "role": "assistant", "content": "What is the occurrence date?"}
+{"timestamp": "2026-03-04T11:09:20", "session_id": "session_1772604688482", "role": "user", "content": "start form 3 shift report"}
+{"timestamp": "2026-03-04T11:09:20", "session_id": "session_1772604688482", "role": "assistant", "content": "You are scheduled on 2026-03-04 from 09:00 to 17:00 at WIMTACH Unit 4012 with Medic 10309. Break window is 12:30-13:00."}
+{"timestamp": "2026-03-04T11:30:03", "session_id": "session_1772604688482", "role": "user", "content": "start form 2 teddy bear report"}
+{"timestamp": "2026-03-04T11:30:03", "session_id": "session_1772604688482", "role": "assistant", "content": "What is the recipient gender (Male, Female, Other, Prefer not to say)?"}
+{"timestamp": "2026-03-04T11:30:16", "session_id": "session_1772604688482", "role": "user", "content": "start form 3 shift report"}
+{"timestamp": "2026-03-04T11:30:16", "session_id": "session_1772604688482", "role": "assistant", "content": "You are scheduled on 2026-03-04 from 09:00 to 17:00 at WIMTACH Unit 4012 with Medic 10309. Break window is 12:30-13:00."}
+{"timestamp": "2026-03-04T11:30:50", "session_id": "session_1772604688482", "role": "user", "content": "start form 2 teddy bear report"}
+{"timestamp": "2026-03-04T11:30:50", "session_id": "session_1772604688482", "role": "assistant", "content": "What is the recipient gender (Male, Female, Other, Prefer not to say)?"}
+{"timestamp": "2026-03-04T11:38:02", "session_id": "session_1772604688482", "role": "user", "content": "start form 2 teddy bear report"}
+{"timestamp": "2026-03-04T11:38:02", "session_id": "session_1772604688482", "role": "assistant", "content": "What is the recipient gender (Male, Female, Other, Prefer not to say)?"}
+{"timestamp": "2026-03-04T11:38:13", "session_id": "session_1772604688482", "role": "user", "content": "I'm home I'm 12 years old"}
+{"timestamp": "2026-03-04T11:38:13", "session_id": "session_1772604688482", "role": "assistant", "content": "What is the recipient gender (Male, Female, Other, Prefer not to say)?"}
+{"timestamp": "2026-03-04T11:38:23", "session_id": "session_1772604688482", "role": "user", "content": "female"}
+{"timestamp": "2026-03-04T11:38:23", "session_id": "session_1772604688482", "role": "assistant", "content": "Who received it (Patient, Family, Bystander, Other)?"}
+{"timestamp": "2026-03-04T11:38:30", "session_id": "session_1772604688482", "role": "user", "content": "patient"}
+{"timestamp": "2026-03-04T11:38:30", "session_id": "session_1772604688482", "role": "assistant", "content": "I captured: name Cliff, age 12, gender Female, recipient type Patient. Say confirm to submit or cancel to edit."}
+{"timestamp": "2026-03-04T11:38:45", "session_id": "session_1772604688482", "role": "user", "content": "confirm and send email"}
+{"timestamp": "2026-03-04T11:38:48", "session_id": "session_1772604688482", "role": "assistant", "content": "Perfect. I submitted the report for a 12 year old Female Patient. Email sent to Team10@EffectiveAI.net"}
+{"timestamp": "2026-03-04T11:39:07", "session_id": "session_1772604688482", "role": "user", "content": "send email to huyhoang.ais@gmail.com"}
+{"timestamp": "2026-03-04T11:39:10", "session_id": "session_1772604688482", "role": "assistant", "content": "Email sent to huyhoang.ais@gmail.com. I included the latest form files as attachments."}
